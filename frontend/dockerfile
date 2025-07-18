@@ -27,9 +27,9 @@ WORKDIR /app
 
 # Set the Node.js environment variable to `production`.
 # This tells Next.js to run in its optimized production mode.
-ENV NODE_ENV=production
+# ENV NODE_ENV=production
 
-ENV HOSTNAME 0.0.0.0
+# ENV HOSTNAME 0.0.0.0
 
 RUN adduser --system --uid 1001 nextjs
 

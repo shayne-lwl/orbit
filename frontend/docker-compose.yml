@@ -8,3 +8,12 @@ services:
     ports:
       - "3000:3000"
     restart: always
+    volumes:
+      # Mounts your local code into the container at /app
+      - .:/app
+      # Prevents the local node_modules from overwriting the container's
+      - /app/node_modules
+
+    # This overrides the Dockerfile's CMD ["npm", "start"] and instead runs the Next.js development server,
+    # which is built to watch for file changes and enable hot-reloading.
+    command: npm run dev
