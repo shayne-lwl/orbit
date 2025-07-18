@@ -1,3 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Dongle:wght@300;400;700&display=swap");
+
+:root {
+  /* Font Colours */
+  --font-blue: #266bae;
+  --font-white: whitesmoke;
+  --font-lightblue: #5fa8d3;
+  --font-green: #5a827e;
+  --font-orange: #e76f51;
+  --font-red: #800e13;
+  --font-black: #101010;
+  --yellow: #fcca46;
+
+  /* Font Size */
+  --fontsize-xs: 16px;
+  --fontsize-s: 20px;
+  --fontsize-m: 32px;
+  --fontsize-l: 44px;
+  --fontsize-xl: 62px;
+
+  font-family: "Dongle";
+}
+
 body {
   background-color: whitesmoke;
+  padding: 0px 5%;
+}
+
+/* Desktop Screen */
+@media screen and (min-width: 1200px) {
+  body {
+    max-width: 1920px;
+  }
+}
+
+/* Tablet Screen */
+@media screen and (min-width: 744px) {
+  body {
+    max-width: 1200px;
+  }
+}
+
+@media screen and (min-width: 320px) {
+  body {
+    max-width: 1000px;
+  }
 }
