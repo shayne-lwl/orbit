@@ -1,0 +1,85 @@
+/* Default styles (Mobile-First: for < 744px) */
+.navigationBarContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+.navigationBarContainer * {
+  font-size: var(--fontsize-m); /* Start with smaller font */
+  text-decoration: none;
+  color: var(--font-black);
+  transition: scale ease-in-out 0.2s;
+  cursor: default;
+}
+
+.navigationBarContainer > .desktop *:hover {
+  scale: 1.05;
+}
+
+.navigationBarContainer > a:nth-child(3) {
+  font-family: "Alfa Slab One";
+  color: var(--font-blue);
+}
+
+.getStartedBtn {
+  white-space: nowrap;
+  justify-self: end;
+  font-size: var(--fontsize-s);
+  border: solid 2px var(--font-black);
+  padding: 5px 20px;
+  border-radius: 100px;
+  box-shadow: 1px 2px 5px var(--font-black);
+  transition: background-color ease-in-out 0.3s;
+}
+
+.getStartedBtn:hover {
+  background-color: #ffe18f;
+}
+
+.desktop {
+  display: none;
+}
+
+.mobile {
+  justify-self: start;
+}
+
+.menuIcon {
+  width: 24px;
+  height: auto;
+}
+
+/* Tablet Screen (744px and up) */
+@media screen and (min-width: 744px) {
+  .navigationBarContainer {
+    grid-template-columns: 2fr 4fr 3fr;
+  }
+
+  .getStartedBtn {
+    font-size: var(--fontsize-m);
+    border: solid 3px var(--font-black);
+    padding: 5px 30px;
+  }
+
+  /* Hide mobile elements */
+  .mobile {
+    display: none;
+  }
+
+  /* Show desktop elements */
+  .desktop {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+  }
+}
+
+/* Desktop Screen (1200px and up) */
+@media screen and (min-width: 1200px) {
+  .navigationBarContainer * {
+    font-size: var(--fontsize-l);
+  }
+}
