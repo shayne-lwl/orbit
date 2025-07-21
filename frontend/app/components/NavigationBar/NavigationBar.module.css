@@ -1,8 +1,8 @@
 /* Default styles (Mobile-First: for < 744px) */
 .navigationBarContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
   justify-items: center;
   align-items: center;
 }
@@ -44,12 +44,33 @@
 }
 
 .mobile {
-  justify-self: start;
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 30px;
 }
 
 .menuIcon {
   width: 24px;
   height: auto;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  opacity: 0;
+
+  /* Make the overlay unclickable when Mobile Menu is not toggled. */
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Tablet Screen (744px and up) */

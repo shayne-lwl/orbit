@@ -1,0 +1,56 @@
+.mobileMenuContainer {
+  width: 60%;
+  height: 100vh;
+  background-color: #6c9e99;
+  display: grid;
+  grid-template-rows: 15% 15% 70%;
+  align-items: end;
+  position: absolute;
+  top: 0;
+  left: -60%;
+  transition: ease-in-out 0.3s;
+  z-index: 100;
+}
+
+.mobileMenuContainer.display {
+  left: 0;
+}
+
+.mobileMenuContainer div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.mobileMenuContainer div p {
+  font-size: var(--fontsize-m);
+  color: var(--font-black);
+  margin: 0;
+}
+
+.icon {
+  transform: translate(0, -5%);
+  width: var(--fontsize-s);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.closeIcon {
+  width: var(--fontsize-xs);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  position: absolute;
+  left: 15px;
+  top: -230px;
+}
+
+.mobileMenuContainer h1 {
+  font-family: "Alfa Slab One";
+  font-size: var(--fontsize-xl);
+  color: var(--font-blue);
+  justify-self: center;
+  margin: 0;
+}
