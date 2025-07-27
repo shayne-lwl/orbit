@@ -1,0 +1,10 @@
+FROM node:20-alpine
+# Set the working directory in the container
+WORKDIR /app
+# Copy package.json and package-lock.json to leverage Docker cache
+COPY package.json package-lock.json ./
+# Install all dependencies, including devDependencies
+RUN npm install
+# This command is optional, as it will be overridden by docker-compose
+# It's good practice to have a default command for the image itself
+CMD ["npm", "run", "dev"]

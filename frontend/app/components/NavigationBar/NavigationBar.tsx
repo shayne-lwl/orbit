@@ -29,7 +29,9 @@ const NavigationBar = () => {
           <Link href="/donate">Donate</Link>
         </div>
 
-        <Link href="/">orbit</Link>
+        <Link href="/" aria-label="orbitHomeLink">
+          orbit
+        </Link>
         <Link href="/register" className={styles.getStartedBtn}>
           Get Started
         </Link>
