@@ -15,7 +15,7 @@ export default function Home() {
       <div className={styles.secondRow}>
         <h2 className={styles.secondarySlogan}>
           <Image src={EarthIcon} alt="Earth Icon" id={styles.earthIcon}></Image>
-          rbit it
+          <span>rbit it</span>
         </h2>
       </div>
       <div className={styles.thirdRow}>
@@ -23,7 +23,11 @@ export default function Home() {
           Donate what you no longer need and find what you do
         </h3>
       </div>
-      <Link href="/register" className={styles.joinButton}>
+      <Link
+        href="/register"
+        className={styles.joinButton}
+        data-testid="Join now button"
+      >
         <span>Join us now</span>
       </Link>
     </main>
