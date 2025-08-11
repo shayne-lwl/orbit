@@ -17,10 +17,11 @@
   --fontsize-m: 32px;
   --fontsize-l: 44px;
   --fontsize-xl: 62px;
+}
 
-  font-family: "Dongle";
-
+* {
   box-sizing: border-box;
+  font-family: "Dongle";
 }
 
 /* Default styles (Mobile-First: for < 744px) */
@@ -32,8 +33,6 @@ body {
 
   /* Ensure the main content fits the remaining space on the screen */
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Tablet Screen */
@@ -46,6 +45,8 @@ body {
 /* Desktop Screen */
 @media screen and (min-width: 1200px) {
   body {
-    max-width: 3000px;
+    max-width: 3840px;
+    display: flex;
+    justify-content: center;
   }
 }

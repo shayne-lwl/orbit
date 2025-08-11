@@ -32,7 +32,7 @@ const NavigationBar = () => {
         <Link href="/" aria-label="orbitHomeLink">
           orbit
         </Link>
-        <Link href="/register" className={styles.getStartedBtn}>
+        <Link href="/account" className={styles.getStartedBtn}>
           Get Started
         </Link>
       </nav>

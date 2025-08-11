@@ -2,10 +2,15 @@
 .navigationBarContainer {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  background-color: whitesmoke;
+  z-index: 1;
   justify-items: center;
   align-items: center;
-  flex-shrink: 0;
-  padding: 1.5rem 5%;
+  height: 95px;
+  padding: 0 5%;
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
 
 .navigationBarContainer * {
@@ -37,7 +42,7 @@
 }
 
 .getStartedBtn:hover {
-  background-color: var(--yellow);
+  background-color: var(--font-orange);
 }
 
 .desktop {
@@ -67,6 +72,7 @@
   /* Make the overlay unclickable when Mobile Menu is not toggled. */
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
+  z-index: 1;
 }
 
 .overlay.active {
@@ -103,6 +109,9 @@
 
 /* Desktop Screen (1200px and up) */
 @media screen and (min-width: 1200px) {
+  .navigationBarContainer {
+    height: 150px;
+  }
   .navigationBarContainer * {
     font-size: var(--fontsize-l);
   }

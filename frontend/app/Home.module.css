@@ -1,12 +1,10 @@
 .container {
-  /* To fill up the remaining space on the screen */
-  flex-grow: 1;
-
   display: grid;
   grid-template-rows: auto;
   justify-items: center;
   align-content: start;
   padding: 0 5%;
+  margin-top: 95px;
 }
 
 .mainSlogan,
@@ -20,7 +18,7 @@
 }
 
 #earthIcon {
-  width: 150px;
+  width: 100px;
   height: auto;
   animation: spin 100s linear infinite;
 }
@@ -35,7 +33,12 @@
   font-size: 24px;
   display: flex;
   flex-direction: row;
+  font-weight: 7000;
   align-items: center;
+}
+
+.secondarySlogan span {
+  font-family: "Alfa Slab One";
 }
 
 .lastSlogan {
@@ -86,6 +89,10 @@
   .container {
     row-gap: 50px;
   }
+
+  #earthIcon {
+    width: 150px;
+  }
   .mainSlogan,
   .secondarySlogan {
     font-size: 48px;
@@ -99,6 +106,7 @@
 @media screen and (min-width: 1200px) {
   .container {
     row-gap: 50px;
+    margin-top: 150px;
   }
   .mainSlogan,
   .secondarySlogan {

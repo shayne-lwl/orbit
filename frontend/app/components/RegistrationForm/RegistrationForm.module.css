@@ -1,0 +1,99 @@
+.container {
+  height: calc(100vh - 95px);
+  padding: 20px;
+  align-content: center;
+  display: grid;
+  grid-template-rows: 40px 300px 100px;
+  gap: 10px;
+}
+
+.container.inactive {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.formHeader {
+  margin: 0;
+  text-align: center;
+  color: var(--font-black);
+}
+
+.formContainer {
+  display: grid;
+  grid-template-rows: repeat(4, 40px);
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+}
+
+.formContainer input {
+  font-size: var(--fontsize-s);
+  width: 100%;
+  border: 2px solid var(--font-black);
+  background-color: rgb(255, 255, 255);
+  padding: 0 10px;
+  box-shadow: 1px 2px 3px var(--font-black);
+  transition: background-color 0.4s ease-in-out;
+}
+
+.formContainer input::placeholder {
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.formContainer input:focus {
+  background-color: rgb(230, 230, 230);
+  outline: none;
+}
+
+.signUpButton {
+  font-size: var(--fontsize-s);
+  border: 2px solid var(--font-black);
+  border-radius: 100px;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.3em 1.5em;
+  background-color: var(--yellow);
+  margin-top: 20px;
+  box-shadow: 1px 2px 3px var(--font-black);
+}
+
+.existingAccountQuestion {
+  width: fit-content;
+  height: fit-content;
+  font-weight: 300;
+  font-size: var(--fontsize-s);
+  justify-self: center;
+  opacity: 0.7;
+  text-align: center;
+  line-height: 10px;
+}
+
+.signInButton {
+  border: none;
+  font-family: "Dongle";
+  background: none;
+  width: fit-content;
+  font-size: var(--fontsize-s);
+  padding: 0;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s ease-in-out;
+}
+
+.signInButton:hover {
+  color: whitesmoke;
+}
+
+/* Tablet Screen (744px and up) */
+@media screen and (min-width: 744px) {
+}
+
+/* Desktop Screen (1200px and up) */
+@media screen and (min-width: 1200px) {
+  .container {
+    padding: 0 150px;
+    height: 100%;
+  }
+}

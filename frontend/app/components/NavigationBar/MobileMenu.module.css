@@ -1,7 +1,7 @@
 .mobileMenuContainer {
   width: 60%;
   height: 100vh;
-  background-color: #6c9e99;
+  background-color: whitesmoke;
   display: grid;
   grid-template-rows: 15% 15% 70%;
   align-items: end;

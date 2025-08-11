@@ -24,7 +24,7 @@ export default function Home() {
         </h3>
       </div>
       <Link
-        href="/register"
+        href="/account"
         className={styles.joinButton}
         data-testid="Join now button"
       >

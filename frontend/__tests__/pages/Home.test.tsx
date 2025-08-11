@@ -49,6 +49,6 @@ describe("Home page content (Not Authenticated)", () => {
 
     const joinNowButton = screen.getByTestId("Join now button");
     await user.click(joinNowButton);
-    expect(mockRouter.asPath).toBe("/register");
+    expect(mockRouter.asPath).toBe("/account");
   });
 });

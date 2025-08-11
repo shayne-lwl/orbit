@@ -37,6 +37,6 @@ describe("Navigation Bar (Not Authenticated)", () => {
     const user = userEvent.setup();
 
     await user.click(getStarted);
-    expect(mockRouter.asPath).toBe("/register");
+    expect(mockRouter.asPath).toBe("/account");
   });
 });
