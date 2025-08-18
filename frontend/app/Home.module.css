@@ -105,7 +105,7 @@
 /* Desktop Screen */
 @media screen and (min-width: 1200px) {
   .container {
-    row-gap: 50px;
+    row-gap: 30px;
     margin-top: 150px;
   }
   .mainSlogan,
