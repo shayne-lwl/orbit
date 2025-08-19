@@ -27,6 +27,7 @@ export default function RegistrationForm({
       className={`${styles.container} ${
         currentSelection === "login" ? styles.inactive : ""
       }`}
+      data-testid="container"
     >
       <h1 className={styles.formHeader}>CREATE ACCOUNT</h1>
       <form
