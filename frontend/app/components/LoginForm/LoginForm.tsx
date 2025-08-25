@@ -28,6 +28,7 @@ export default function LoginForm({
         currentSelection === "registration" ? styles.inactive : ""
       }`}
       ref={ref}
+      data-testid="login-form-container"
     >
       <h1 className={styles.formHeader}>WELCOME BACK</h1>
       <form

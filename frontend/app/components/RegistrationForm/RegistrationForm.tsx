@@ -27,7 +27,7 @@ export default function RegistrationForm({
       className={`${styles.container} ${
         currentSelection === "login" ? styles.inactive : ""
       }`}
-      data-testid="container"
+      data-testid="registration-form-container"
     >
       <h1 className={styles.formHeader}>CREATE ACCOUNT</h1>
       <form
@@ -57,6 +57,7 @@ export default function RegistrationForm({
         <button
           className={styles.signInButton}
           onClick={() => toggleSelection("Sign in")}
+          data-testid="Registration Form Sign in Button"
         >
           Sign in
         </button>
