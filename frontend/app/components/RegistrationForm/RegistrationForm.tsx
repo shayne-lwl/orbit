@@ -49,12 +49,19 @@ export default function RegistrationForm({
             placeholder="Username"
             {...register("username", {
               required: "Username is required",
-              minLength: 5,
-              maxLength: 15,
+              minLength: {
+                value: 5,
+                message: "Username must be at least 5 characters long",
+              },
+
+              maxLength: {
+                value: 15,
+                message: "Username cannot be longer than 15 characters",
+              },
               pattern: {
-                value: /^[A-Za-z0-9_]{5,15}$/,
+                value: /^[A-Za-z0-9_]*$/,
                 message:
-                  "Username must be 5-15 characters with letters, numbers, or underscores.",
+                  "Username must start with a letter or number and can only contain letters, numbers, and underscores.",
               },
             })}
           />
@@ -90,7 +97,7 @@ export default function RegistrationForm({
                 value:
                   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,32}$/,
                 message:
-                  "Password must be 8-32 characters and include uppercase, lowercase, numbers, and symbols.",
+                  "Password must be 8 to 32 characters and include uppercase, lowercase, numbers, and symbols",
               },
             })}
           />
