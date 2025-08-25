@@ -19,7 +19,11 @@ export default function LoginForm({
   ref,
   currentSelection,
 }: LoginFormProps) {
-  const { register, handleSubmit } = useForm<FormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInput>();
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data);
 
   return (
@@ -36,12 +40,27 @@ export default function LoginForm({
         onSubmit={handleSubmit(onSubmit)}
         className={styles.formContainer}
       >
-        <input type="text" placeholder="Email" {...register("email")} />
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="Email"
+            {...register("email", { required: "Email address is required" })}
+          />
+          {errors.email && (
+            <p className={styles.errorMessage}>{errors.email.message}</p>
+          )}
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password", { required: "Password is required" })}
+          />
+          {errors.password && (
+            <p className={styles.errorMessage}>{errors.password.message}</p>
+          )}
+        </div>
+
         <button type="submit" className={styles.signUpButton}>
           Sign in
         </button>
