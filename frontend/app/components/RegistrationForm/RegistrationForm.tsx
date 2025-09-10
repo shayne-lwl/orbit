@@ -25,6 +25,7 @@ export default function RegistrationForm({
     handleSubmit,
     watch,
     formState: { errors },
+    reset, // To reset the input validation errors and input values when user clicks Sign in
   } = useForm<FormInput>();
   const passwordValue = watch("password"); // This is variable is to check if its value matches with the passwordConfirmation input value.
   const onSubmit: SubmitHandler<FormInput> = (data) => {
@@ -135,7 +136,10 @@ export default function RegistrationForm({
         <br />
         <button
           className={styles.signInButton}
-          onClick={() => toggleSelection("Sign in")}
+          onClick={() => {
+            reset();
+            toggleSelection("Sign in");
+          }}
           data-testid="Registration Form Sign in Button"
         >
           Sign in

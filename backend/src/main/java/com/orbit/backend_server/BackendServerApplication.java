@@ -8,6 +8,6 @@ public class BackendServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendServerApplication.class, args);
+		System.out.println("Hello World");
 	}
-
 }

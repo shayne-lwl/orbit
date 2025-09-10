@@ -1,0 +1,79 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  # PostgreSQL Database Service
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: orbit-db-postgres
+    environment:
+      POSTGRES_DB: orbit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      # Persist data even when container stops
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      # Expose PostgreSQL on host for debugging (optional)
+      - "5432:5432"
+    networks:
+      - orbit-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Backend Service
+  backend: # This name becomes the backend hostname.
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: orbit-backend
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: mysecretpassword
+      # Override any properties if needed
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    networks:
+      - orbit-network
+    volumes:
+      # For development: mount source code for hot reload (optional)
+      - ./backend-server:/app/src
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: orbit-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - orbit-network
+    environment:
+      # Docker's internal DNS translates backend into the actual IP address of your backend container. We can't use localhost because each container has its own localhost
+      # that refers only to itself.
+      REACT_APP_API_URL: http://backend:8080
+    volumes:
+      - ./frontend:/app # This is a bind mount that maps your local ./frontend directory to /app inside the container
+      - /app/node_modules # This creates an anonymous volume specifically for the /app/node_modules directory. This prevents the local ./frontend/node_modules from being mounted into the container
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# Define named volumes for data persistence
+volumes:
+  postgres-data:
+    driver: local
+
+# Define the vritual network for container communication
+networks:
+  orbit-network:
+    driver: bridge

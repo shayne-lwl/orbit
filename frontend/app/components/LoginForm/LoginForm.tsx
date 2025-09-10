@@ -23,6 +23,7 @@ export default function LoginForm({
     register,
     handleSubmit,
     formState: { errors },
+    reset, // To reset the input validation errors and input values when user clicks Register now
   } = useForm<FormInput>();
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data);
 
@@ -70,7 +71,10 @@ export default function LoginForm({
         <br />
         <button
           className={styles.registerNow}
-          onClick={() => toggleSelection("Sign up")}
+          onClick={() => {
+            reset();
+            toggleSelection("Sign up");
+          }}
         >
           Register now
         </button>

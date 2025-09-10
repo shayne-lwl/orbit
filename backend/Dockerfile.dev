@@ -1,0 +1,30 @@
+# Starting with a base image that already has both Maven (build tool) and amazoncorrectto-24 (Java runtime)
+FROM maven:3.9.11-amazoncorretto-24-alpine AS builder
+WORKDIR /app
+
+# Copy the file content that consists of the application's dependencies. 
+COPY pom.xml .
+# Download all the dependencies. -B flag stands for "Batch Mode" which tells Maven to run non-interactively without prompting user inputs.  
+# The dependency:go-offline goal downloads everything your project might need to build offline later.
+RUN mvn dependency:go-offline -B
+
+# Copy the source code 
+COPY src ./src
+# Clean removes any previously compiled files to ensure we're starting fresh. Then package compiles your code and packages it into a JAR file.
+# The -DskipTests flag tells Maven to skip running unit tests during the build. 
+RUN mvn clean package -DskipTests && ls -la target/
+
+# Runtime: We use amazoncorretto:24 image and not the Maven image because we don't need Maven to run our application, only to build it. 
+FROM amazoncorretto:24-alpine AS runner
+WORKDIR /app
+
+# We're grabbing the JAR file that Maven created in the /app/target/ directory during build stage and copying it to our current image as app.jar.
+COPY --from=builder /app/target/backend-server-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8080
+
+# Tells Spring Boot to use the application-docker.properties configuration file we created earlier.
+ENV SPRING_PROFILES_ACTIVE=docker
+
+# The ENTRYPOINT defines what command runs when the container starts
+ENTRYPOINT ["java", "-jar", "app.jar"]
