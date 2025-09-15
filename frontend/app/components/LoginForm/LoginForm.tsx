@@ -23,9 +23,27 @@ export default function LoginForm({
     register,
     handleSubmit,
     formState: { errors },
+    setError,
     reset, // To reset the input validation errors and input values when user clicks Register now
   } = useForm<FormInput>();
-  const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data);
+
+  const loginUser = async (userData: FormInput): Promise<void> => {
+    const response = await fetch("http://localhost:8080/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+
+    const responseData = await response.json();
+    console.log(responseData);
+    if (!response.ok) {
+      setError("root", {
+        type: "server",
+        message: responseData.error,
+      });
+    }
+  };
+  const onSubmit: SubmitHandler<FormInput> = (data) => loginUser(data);
 
   return (
     <div
@@ -59,6 +77,9 @@ export default function LoginForm({
           />
           {errors.password && (
             <p className={styles.errorMessage}>{errors.password.message}</p>
+          )}
+          {errors.root && (
+            <p className={styles.errorMessage}>{errors.root.message}</p>
           )}
         </div>
 

@@ -39,7 +39,7 @@ export default function RegistrationForm({
   } = useForm<FormInput>();
   const passwordValue = watch("password"); // This is variable is to check if its value matches with the passwordConfirmation input value.
 
-  const registerUser = async (userData: FormInput): Promise<User> => {
+  const registerUser = async (userData: FormInput): Promise<void> => {
     const response = await fetch("http://localhost:8080/api/users/register", {
       method: "POST",
       headers: {
@@ -51,18 +51,13 @@ export default function RegistrationForm({
     const responseData = await response.json();
 
     if (!response.ok) {
-      console.log(responseData.error.message);
       setError("root", {
         type: "server",
         message: responseData.error,
       });
     }
-
-    console.log(responseData);
-    return responseData;
   };
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log("Form Submitted");
     registerUser(data);
   };
   return (
