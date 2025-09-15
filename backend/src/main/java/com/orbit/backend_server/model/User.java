@@ -2,6 +2,9 @@ package com.orbit.backend_server.model;
 import jakarta.persistence.*;
 
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,7 +15,7 @@ public class User {
 
     // Fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Inidicates that the ID will be automatically generated upon user creation
+    @GeneratedValue(strategy = GenerationType.UUID) // Inidicates that the ID will be automatically generated upon user creation
     private UUID id;
 
     @Column(nullable= false, unique = true)
@@ -22,9 +25,14 @@ public class User {
     private String email;
 
     @Column(nullable = false, unique = true)
+    private String password;
+
+    @Column(nullable = false)
+    @CreationTimestamp // Auto generate a timestamp on user creation
     private LocalDate registrationDate;
 
     @Column(nullable = false) 
+    @CreationTimestamp 
     private LocalDateTime lastSeen;
 
     @Column(nullable = false)
@@ -56,8 +64,12 @@ public class User {
         this.isOnline = !this.isOnline;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     // Getter Methods
-    public UUID getID() {
+    public UUID getId() {
         return this.id;
     }
 
@@ -67,6 +79,10 @@ public class User {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     public LocalDate getRegistrationDate() {
