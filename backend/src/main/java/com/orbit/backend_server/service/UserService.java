@@ -36,7 +36,9 @@ public class UserService {
             throw new IllegalArgumentException("Email address already exists");
         }
 
-        if(!request.getPassword().equals(request.getPasswordConfirmation())) {
+        if(!request.getPassword().equals(request.getconfirmPassword())) {
+            System.out.println(request.getPassword());
+            System.out.println(request.getconfirmPassword());
             throw new IllegalArgumentException("Password confirmation does not match");
         }
 

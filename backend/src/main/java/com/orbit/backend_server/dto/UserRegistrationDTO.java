@@ -4,7 +4,7 @@ public class UserRegistrationDTO {
     private String username;
     private String email;
     private String password;
-    private String passwordConfirmation;
+    private String confirmPassword;
 
     // Getters 
     public String getUsername() {
@@ -19,8 +19,8 @@ public class UserRegistrationDTO {
         return this.password;
     }
 
-    public String getPasswordConfirmation() {
-        return this.passwordConfirmation;
+    public String getconfirmPassword() {
+        return this.confirmPassword;
     }
 
     // Setters
@@ -36,7 +36,7 @@ public class UserRegistrationDTO {
         this.password = password;
     }
 
-    public void setPasswordConfirmation(String passwordConfirmation) {
-        this.passwordConfirmation = passwordConfirmation;
+    public void setconfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

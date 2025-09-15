@@ -3,6 +3,7 @@ package com.orbit.backend_server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import com.orbit.backend_server.dto.UserRegistrationDTO;
 
 @RestController // Combines @Controller and @ResponseBody for all methods
 @RequestMapping("/api/users") // Sets the base path for all endpoints in this controller
+@CrossOrigin(origins = "http://localhost:3000") 
 public class UserController {
     @Autowired
     private UserService userService;
@@ -21,6 +23,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<User> userRegistration(@RequestBody UserRegistrationDTO request) { // @RequestBody convert the JSON data from HTTP request body into a Java object
         User createdUser = userService.registerUser(request);
+        System.out.println("Registration Request Received!");
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 }
