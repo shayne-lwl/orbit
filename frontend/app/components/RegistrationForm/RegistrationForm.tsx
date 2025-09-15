@@ -13,6 +13,15 @@ interface RegistrationFormProps {
   toggleSelection: (input: "Sign in" | "Sign up") => void;
   currentSelection: string;
 }
+// API response data type
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  registrationDate: string;
+  lastSeen: string;
+  isOnline: boolean;
+}
 
 export default function RegistrationForm({
   toggleSelection,
@@ -26,10 +35,35 @@ export default function RegistrationForm({
     watch,
     formState: { errors },
     reset, // To reset the input validation errors and input values when user clicks Sign in
+    setError,
   } = useForm<FormInput>();
   const passwordValue = watch("password"); // This is variable is to check if its value matches with the passwordConfirmation input value.
+
+  const registerUser = async (userData: FormInput): Promise<User> => {
+    const response = await fetch("http://localhost:8080/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      console.log(responseData.error.message);
+      setError("root", {
+        type: "server",
+        message: responseData.error,
+      });
+    }
+
+    console.log(responseData);
+    return responseData;
+  };
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log("Form Submitted");
+    registerUser(data);
   };
   return (
     <div
@@ -69,6 +103,12 @@ export default function RegistrationForm({
           {errors.username && (
             <p className={styles.errorMessage}>{errors.username.message}</p>
           )}
+          {errors.root && (
+            <p className={styles.errorMessage}>
+              {errors.root.message === "Username already exists" &&
+                errors.root.message}
+            </p>
+          )}
         </div>
         <div>
           <input
@@ -83,7 +123,13 @@ export default function RegistrationForm({
             })}
           />
           {errors.email && (
-            <p className={styles.errorMessage}>{errors.email.message}</p>
+            <p className={styles.errorMessage}>{errors.email?.message}</p>
+          )}
+          {errors.root && (
+            <p className={styles.errorMessage}>
+              {errors.root.message === "Email address already exists" &&
+                errors.root.message}
+            </p>
           )}
         </div>
         <div>
