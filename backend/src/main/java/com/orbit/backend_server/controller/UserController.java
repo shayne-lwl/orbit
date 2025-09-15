@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.orbit.backend_server.service.UserService;
 import com.orbit.backend_server.model.User;
+import com.orbit.backend_server.dto.UserLoginDTO;
 import com.orbit.backend_server.dto.UserRegistrationDTO;
 
 @RestController // Combines @Controller and @ResponseBody for all methods
@@ -23,7 +24,12 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<User> userRegistration(@RequestBody UserRegistrationDTO request) { // @RequestBody convert the JSON data from HTTP request body into a Java object
         User createdUser = userService.registerUser(request);
-        System.out.println("Registration Request Received!");
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> userLogin(@RequestBody UserLoginDTO request) {
+        User signedInUser = userService.loginUser(request);
+        return ResponseEntity.status(HttpStatus.OK).body(signedInUser);
     }
 }

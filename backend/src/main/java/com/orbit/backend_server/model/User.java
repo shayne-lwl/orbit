@@ -68,6 +68,10 @@ public class User {
         this.password = password;
     }
 
+    public void setLastSeen(LocalDateTime lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
     // Getter Methods
     public UUID getId() {
         return this.id;

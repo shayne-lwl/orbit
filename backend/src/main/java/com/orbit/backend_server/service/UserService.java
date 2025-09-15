@@ -1,6 +1,8 @@
 package com.orbit.backend_server.service;
 
 import java.util.regex.Pattern;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.orbit.backend_server.repository.UserRepository;
 import com.orbit.backend_server.model.User;
+import com.orbit.backend_server.dto.UserLoginDTO;
 import com.orbit.backend_server.dto.UserRegistrationDTO;
 
 @Service
@@ -55,5 +58,19 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(request.getPassword());
         user.setPassword(hashedPassword);
         return userRepository.save(user);
+    }
+
+    public User loginUser(UserLoginDTO request) {
+        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
+        if(userOptional.isPresent()) {
+            User user = userOptional.get(); // Retrieve the actual User entity if userOptional exists
+            if(passwordEncoder.matches(request.getPassword(), user.getPassword())) { // Compare the stored password and request password
+                user.setLastSeen(LocalDateTime.now());
+                user.toggleOnlineStatus();
+                return userRepository.save(user);
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid email or password");
     }
 }
