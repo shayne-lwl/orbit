@@ -38,6 +38,14 @@ public class User {
     @Column(nullable = false)
     private boolean isOnline;
 
+    @Column(length = 6)
+    private String verificationCode;
+
+    private LocalDateTime verificationCodeExpiry;
+
+    @Column(nullable = false)
+    private boolean isEnabled;
+
     // Constructors
     // No argument constructor (for JPA)
     public User() {
@@ -72,6 +80,18 @@ public class User {
         this.lastSeen = lastSeen;
     }
 
+    public void setVerificationCode(String code) {
+        this.verificationCode = code;
+    }
+
+    public void setIsEnabled(boolean status) {
+        this.isEnabled = status;
+    }
+
+    public void setVerificationCodeExpiry(LocalDateTime expiration) {
+        this.verificationCodeExpiry = expiration;
+    }
+
     // Getter Methods
     public UUID getId() {
         return this.id;
@@ -99,5 +119,17 @@ public class User {
 
     public boolean getOnlineStatus() {
         return this.isOnline;
+    }
+
+    public String getVerificationCode() {
+        return this.verificationCode;
+    }
+
+    public LocalDateTime getVerificationCodeExpiry() {
+        return this.verificationCodeExpiry;
+    }
+
+    public boolean getIsEnabled() {
+        return this.isEnabled;
     }
 }
