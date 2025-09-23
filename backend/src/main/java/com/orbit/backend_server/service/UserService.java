@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -26,14 +28,20 @@ public class UserService {
     @Autowired
     private EmailService emailService;
 
+    private AuthenticationManager authenticationManager;
+
+    public UserService(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
     public User registerUser(UserRegistrationDTO request) {
         // Request data validation 
         String usernamePattern = "^[A-Za-z0-9_]*$";
-        if(request.getUsername().length() < 5 || request.getUsername().length() > 15) {
+        if(request.getMyUsername().length() < 5 || request.getMyUsername().length() > 15) {
             throw new IllegalArgumentException("Username must be at least 5 characters long and cannot be longer than 15 characters");
-        } else if(!Pattern.matches(usernamePattern,request.getUsername())) {
+        } else if(!Pattern.matches(usernamePattern,request.getMyUsername())) {
             throw new IllegalArgumentException("Username must start with a letter or number and can only contain letters, numbers, and underscores.");
-        } else if(userRepository.existsByUsername(request.getUsername())) {
+        } else if(userRepository.existsByUsername(request.getMyUsername())) {
             throw new IllegalArgumentException("Username already exists");
         }
 
@@ -58,7 +66,7 @@ public class UserService {
         }
 
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setUsername(request.getMyUsername());
         user.setEmail(request.getEmail());
         String hashedPassword = passwordEncoder.encode(request.getPassword());
         user.setPassword(hashedPassword);
@@ -74,15 +82,11 @@ public class UserService {
         // Send the email
         emailService.sendVerifcationEmail(user.getEmail(), verifcationCode);
 
-        if(savedUser.getIsEnabled() == false) {
-            userRepository.delete(savedUser);
-        }
-       
         return savedUser;
     }
 
     // Email Verifcation Logic
-    public void verifyEmail(String email, String verifcationCode) {
+    public User verifyEmail(String email, String password, String verifcationCode) {
         User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
@@ -101,7 +105,11 @@ public class UserService {
         user.setIsEnabled(true);
         user.setVerificationCode(null);
         user.setVerificationCodeExpiry(null);
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(email, password)
+        );
         userRepository.save(user);
+        return user;
     }
 
     public void resendVerificationCode(String email) {
@@ -131,6 +139,9 @@ public class UserService {
             if(passwordEncoder.matches(request.getPassword(), user.getPassword())) { // Compare the stored password and request password
                 user.setLastSeen(LocalDateTime.now());
                 user.toggleOnlineStatus();
+                authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+                );
                 return userRepository.save(user);
             }
 

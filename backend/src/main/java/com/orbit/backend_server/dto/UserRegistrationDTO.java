@@ -7,7 +7,7 @@ public class UserRegistrationDTO {
     private String confirmPassword;
 
     // Getters 
-    public String getUsername() {
+    public String getMyUsername() {
         return this.username;
     }
 

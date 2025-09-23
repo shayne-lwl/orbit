@@ -38,6 +38,9 @@ services:
       DB_PASSWORD: mysecretpassword
       # Override any properties if needed
       SPRING_PROFILES_ACTIVE: docker
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     ports:
       - "8080:8080"
     networks:

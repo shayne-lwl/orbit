@@ -28,7 +28,7 @@ export default function LoginForm({
   } = useForm<FormInput>();
 
   const loginUser = async (userData: FormInput): Promise<void> => {
-    const response = await fetch("http://localhost:8080/api/users/login", {
+    const response = await fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),

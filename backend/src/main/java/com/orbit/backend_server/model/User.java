@@ -1,9 +1,13 @@
 package com.orbit.backend_server.model;
 import jakarta.persistence.*;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +15,23 @@ import java.time.LocalDateTime;
 // @Entity annotation tells Spring Boot's JPA that this class is an entity and should be mapped to a database table. 
 @Entity
 @Table(name= "users")
-public class User {
+public class User implements UserDetails{ // The UserDetails interface is a translator that takes our custom user data and presents it in a way Spring Secuirty can understand.
+
+    // UserDetails Required Methods
+    @Override
+    /* 
+     * ? is called a wildcard and it means "some type, but I am not specifying exactly which type."
+     * GrantedAuthority is Spring Security's way of representing a single permission or role that a user has. 
+     * Hence, Collection<GrantedAuthority> means a collection that holds multiple permissions or roles. 
+     */
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 
     // Fields
     @Id
@@ -97,7 +117,7 @@ public class User {
         return this.id;
     }
 
-    public String getUsername() {
+    public String getMyUsername() {
         return this.username;
     }
 

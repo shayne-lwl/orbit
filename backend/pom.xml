@@ -70,6 +70,24 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<!--This dependency provides the core interfaces and abstract classes that define how JWT operations should work.-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<!--This dependency is where the actual JWT processing logic lives. It contains the concrete classes that implement all the interfaces defined in the API layer.-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<!--This dependency handles the conversion between JSON strings and Java objects. It uses Jackson library to serialize Java objects into JSON when creating JWTs and deserialize JSON back into Java objects when parsing JWTS. -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
