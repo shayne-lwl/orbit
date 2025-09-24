@@ -80,7 +80,7 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         // Send the email
-        emailService.sendVerifcationEmail(user.getEmail(), verifcationCode);
+        emailService.sendVerifcationEmail(user.getEmail(), user.getMyUsername(), verifcationCode);
 
         return savedUser;
     }
@@ -127,8 +127,8 @@ public class UserService {
             String newVerifcationCode = RandomStringUtils.randomAlphanumeric(6);
             user.setVerificationCode(newVerifcationCode);
             user.setVerificationCodeExpiry(LocalDateTime.now().plusMinutes(5));
-             userRepository.save(user);
-            emailService.sendVerifcationEmail(email, newVerifcationCode);  
+            userRepository.save(user);
+            emailService.sendVerifcationEmail(email, user.getMyUsername(), newVerifcationCode); 
         }
     }
 

@@ -50,7 +50,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> userLogin(@RequestBody UserLoginDTO request) {
         User signedInUser = userService.loginUser(request);
-        System.out.println(signedInUser);
         String jwtToken = jwtService.generateToken(signedInUser);
         return ResponseEntity.ok(Map.of("jwtToken", jwtToken, "user", signedInUser));
     }    
