@@ -34,6 +34,7 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
+
     public User registerUser(UserRegistrationDTO request) {
         // Request data validation 
         String usernamePattern = "^[A-Za-z0-9_]*$";
@@ -116,7 +117,8 @@ public class UserService {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if(userOptional.isPresent()) {
             User user = userOptional.get();
-            if(!LocalDateTime.now().minusMinutes(1).isAfter(user.getVerificationCodeExpiry())) {
+            LocalDateTime codeSentAt = user.getVerificationCodeExpiry().minusMinutes(5);
+            if(!LocalDateTime.now().plusMinutes(1).isAfter(codeSentAt)) {
                 throw new IllegalArgumentException("Please wait 60 seconds to resend.");
             }
 

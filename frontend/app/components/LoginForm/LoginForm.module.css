@@ -61,7 +61,7 @@
   font-size: var(--fontsize-s);
 }
 
-.signUpButton {
+.signInButton {
   font-size: var(--fontsize-s);
   border: 2px solid var(--font-black);
   border-radius: 100px;
@@ -113,5 +113,26 @@
   .container {
     padding: 0 150px;
     height: 100%;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 932px) {
+  .container {
+    padding: 0 50px;
+    grid-template-rows: auto;
+  }
+
+  .formContainer {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .signInButton {
+    margin-top: 10px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .existingAccountQuestion {
+    margin: 10px;
   }
 }

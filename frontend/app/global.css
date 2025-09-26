@@ -20,6 +20,8 @@
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: "Dongle";
 }
@@ -32,7 +34,7 @@ body {
   max-width: 1000px;
 
   /* Ensure the main content fits the remaining space on the screen */
-  min-height: 100vh;
+  height: calc(100vh - 95px);
 }
 
 /* Tablet Screen */
@@ -45,6 +47,7 @@ body {
 /* Desktop Screen */
 @media screen and (min-width: 1200px) {
   body {
+    height: calc(100vh - 150px);
     max-width: 3840px;
     display: flex;
     justify-content: center;

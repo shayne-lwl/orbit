@@ -1,0 +1,176 @@
+.container {
+  width: 100%;
+  margin-top: 120px;
+  height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 100px;
+}
+
+.emailIcon {
+  width: 64px;
+  height: auto;
+}
+
+.firstHeader,
+.secondHeader {
+  margin: 0;
+  text-align: center;
+}
+
+.secondHeader {
+  font-weight: 400;
+  line-height: 1;
+}
+
+.codeInput {
+  margin-top: 10px;
+  font-size: var(--fontsize-m);
+  text-align: center;
+  outline: none;
+  border: 2.5px solid black;
+  transition: border ease-in-out 0.3s;
+}
+
+.codeInput:focus {
+  border-color: var(--font-orange);
+}
+
+.resendInstruction {
+  font-size: var(--fontsize-s);
+  font-weight: 300;
+  text-align: center;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.resendButton {
+  margin: 0;
+  font-size: var(--fontsize-s);
+  font-weight: 400;
+  border: none;
+  background-color: none;
+  background: none;
+  text-decoration: underline;
+  transition: color ease-in-out 0.3s;
+}
+
+.resendButton:hover {
+  color: var(--font-blue);
+}
+
+.verifyButton {
+  font-size: var(--fontsize-m);
+  padding: 0 1.3em;
+  border: 3px solid black;
+  background-color: var(--yellow);
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Tablet Screen (744px and up) */
+@media screen and (min-width: 744px) {
+  .container {
+    padding-bottom: 200px;
+  }
+
+  .firstHeader {
+    font-size: var(--fontsize-l);
+  }
+
+  .secondHeader {
+    font-size: var(--fontsize-m);
+  }
+
+  .codeInput {
+    font-size: var(--fontsize-m);
+  }
+
+  .resendInstruction {
+    margin-top: 20px;
+    font-size: var(--fontsize-m);
+    line-height: 1;
+  }
+
+  .resendButton {
+    font-size: var(--fontsize-m);
+  }
+
+  .verifyButton {
+    margin-top: 30px;
+    font-size: var(--fontsize-m);
+  }
+}
+
+/* Desktop Screen (1200px and up) */
+@media screen and (min-width: 1200px) {
+  .emailIcon {
+    width: 64px;
+    height: auto;
+  }
+
+  .firstHeader {
+    font-size: var(--fontsize-xl);
+  }
+
+  .secondHeader {
+    font-size: var(--fontsize-l);
+  }
+
+  .codeInput {
+    font-size: var(--fontsize-l);
+  }
+  .resendInstruction {
+    line-height: 1;
+    font-size: var(--fontsize-l);
+  }
+
+  .resendButton {
+    font-size: var(--fontsize-l);
+  }
+
+  .verifyButton {
+    margin-top: 10px;
+    font-size: var(--fontsize-l);
+    border-width: 5px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 932px) {
+  .container {
+    margin-top: 95px;
+    height: calc(100vh - 95px);
+    padding-bottom: 0px;
+  }
+  .emailIcon {
+    width: 44px;
+    height: auto;
+  }
+
+  .firstHeader {
+    font-size: var(--fontsize-m);
+  }
+
+  .secondHeader {
+    font-size: var(--fontsize-s);
+  }
+
+  .codeInput {
+    font-size: var(--fontsize-s);
+  }
+  .resendInstruction {
+    line-height: 1;
+    font-size: var(--fontsize-s);
+  }
+
+  .resendButton {
+    font-size: var(--fontsize-s);
+  }
+
+  .verifyButton {
+    margin-top: 10px;
+    font-size: var(--fontsize-s);
+  }
+}

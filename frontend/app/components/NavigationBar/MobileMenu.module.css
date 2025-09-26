@@ -5,7 +5,7 @@
   display: grid;
   grid-template-rows: 15% 15% 70%;
   align-items: end;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: -60%;
   transition: ease-in-out 0.3s;
@@ -53,6 +53,13 @@
   color: var(--font-blue);
   justify-self: center;
   margin: 0;
+}
+@media (orientation: landscape) {
+  .mobileMenuContainer {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    grid-template-rows: 20% 20% 60%;
+  }
 }
 
 @media screen and (max-width: 274px) {

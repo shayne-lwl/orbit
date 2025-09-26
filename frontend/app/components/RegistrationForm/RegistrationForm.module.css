@@ -118,3 +118,21 @@
     height: 100%;
   }
 }
+
+/* Target IPhone SE landscape specifically */
+@media (orientation: landscape) and (max-width: 932px) {
+  .container {
+    padding: 20px;
+    gap: 0px;
+  }
+  .formContainer {
+    grid-template: repeat(2, auto) / repeat(4, auto);
+    gap: 10px;
+  }
+
+  .signUpButton {
+    margin-top: 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}

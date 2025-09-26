@@ -83,7 +83,7 @@ export default function LoginForm({
           )}
         </div>
 
-        <button type="submit" className={styles.signUpButton}>
+        <button type="submit" className={styles.signInButton}>
           Sign in
         </button>
       </form>

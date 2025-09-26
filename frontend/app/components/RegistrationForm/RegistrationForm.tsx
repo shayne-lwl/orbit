@@ -1,7 +1,8 @@
 "use client";
 import styles from "./RegistrationForm.module.css";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { useRouter } from "next/navigation";
+import { useState, useContext } from "react";
 interface FormInput {
   username: string;
   email: string;
@@ -18,9 +19,9 @@ interface User {
   id: string;
   username: string;
   email: string;
-  registrationDate: string;
-  lastSeen: string;
-  isOnline: boolean;
+  isEnabled: boolean;
+  lastSeen: Date;
+  onlineStatus: boolean;
 }
 
 export default function RegistrationForm({
@@ -39,27 +40,51 @@ export default function RegistrationForm({
   } = useForm<FormInput>();
   const passwordValue = watch("password"); // This is variable is to check if its value matches with the passwordConfirmation input value.
 
-  const registerUser = async (userData: FormInput): Promise<void> => {
-    const response = await fetch("http://localhost:8080/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+  const [userData, setUserData] = useState<User | null>(null);
+  const router = useRouter();
 
-    const responseData = await response.json();
+  const registerUser = async (userData: FormInput): Promise<User | null> => {
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
 
-    if (!response.ok) {
+      const responseData = await response.json();
+      if (!response.ok) {
+        setError("root", {
+          type: "server",
+          message: responseData.error,
+        });
+        return null;
+      }
+
+      setUserData(responseData);
+
+      return responseData;
+    } catch (error) {
       setError("root", {
         type: "server",
-        message: responseData.error,
+        message: "Registration failed. Please try again later.",
       });
+      return null;
     }
   };
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    registerUser(data);
+
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    const newUser = await registerUser(data);
+    if (newUser !== null) {
+      const params = new URLSearchParams({
+        userId: newUser.id,
+        email: newUser.email,
+      });
+      router.push(`/account/verify-email?${params.toString()}`);
+    }
   };
+
   return (
     <div
       className={`${styles.container} ${

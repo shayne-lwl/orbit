@@ -17,7 +17,7 @@ import com.orbit.backend_server.dto.EmailVerficiationDTO;
 import com.orbit.backend_server.dto.ResendCodeDTO;
 import com.orbit.backend_server.dto.UserLoginDTO;
 import com.orbit.backend_server.dto.UserRegistrationDTO;
-
+import com.orbit.backend_server.dto.UserResponseDTO;
 @RestController // Combines @Controller and @ResponseBody for all methods
 @RequestMapping("/api/auth") // Sets the base path for all endpoints in this controller
 public class UserController {
@@ -29,9 +29,10 @@ public class UserController {
     private JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> userRegistration(@RequestBody UserRegistrationDTO request) { // @RequestBody convert the JSON data from HTTP request body into a Java object
+    public ResponseEntity<UserResponseDTO> userRegistration(@RequestBody UserRegistrationDTO request) { // @RequestBody convert the JSON data from HTTP request body into a Java object
         User createdUser = userService.registerUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        UserResponseDTO response = new UserResponseDTO(createdUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/register/verify-email")
@@ -43,8 +44,13 @@ public class UserController {
 
     @PostMapping("/register/resend-verification-code") 
     public ResponseEntity<Map<String, String>> resendVerification(@RequestBody ResendCodeDTO request) {
-        userService.resendVerificationCode(request.getEmail());
-        return ResponseEntity.ok(Map.of("message", "Verification code sent"));
+        try {
+            userService.resendVerificationCode(request.getEmail());
+            return ResponseEntity.ok(Map.of("message", "Verification code sent"));
+        } catch(IllegalArgumentException error) {
+            return ResponseEntity.badRequest().body(Map.of("error", error.getMessage()));
+        }
+
     }
 
     @PostMapping("/login")

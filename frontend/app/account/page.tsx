@@ -16,14 +16,22 @@ export default function Account() {
   const toggleSelection = (input: "Sign in" | "Sign up") => {
     if (input === "Sign in") {
       setSelection(Selection.Login);
-      if (window.innerWidth < 744) {
+      if (
+        window.innerWidth < 744 ||
+        (window.innerWidth <= 932 &&
+          window.screen.orientation.type.includes("landscape"))
+      ) {
         loginSelectionRef.current?.scrollIntoView({
           behavior: "smooth",
         });
       }
     } else {
       setSelection(Selection.Registration);
-      if (window.innerWidth < 744) {
+      if (
+        window.innerWidth < 744 ||
+        (window.innerWidth <= 932 &&
+          window.screen.orientation.type.includes("landscape"))
+      ) {
         window.scroll({ top: 0, behavior: "smooth" });
       }
     }
@@ -64,8 +72,12 @@ export default function Account() {
       }
     };
 
-    // To ensure scrolling behavior only works on mobile devices
-    if (window.innerWidth < 744) {
+    // To ensure scrolling behavior only works on mobile devices and mobile devices in landscape view
+    if (
+      window.innerWidth < 744 ||
+      (window.innerWidth <= 932 &&
+        window.screen.orientation.type.includes("landscape"))
+    ) {
       window.addEventListener("scroll", handleScroll, { passive: true });
     }
 

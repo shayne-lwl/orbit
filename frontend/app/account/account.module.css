@@ -34,7 +34,7 @@
   }
   .selection {
     height: 75%;
-    top: 37.5% !important;
+    top: 37.5%;
     left: 10px;
     transform: translate(0, -37.5%);
     width: 50%;
@@ -63,5 +63,28 @@
   .selection.switch {
     top: 37.5%;
     left: 49%;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 932px) {
+  .formsContainer {
+    display: block;
+  }
+
+  .selection {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: calc(100vh - 100px);
+    transform: translate(-50%, 0);
+    width: 98%;
+  }
+
+  .selection.switch {
+    top: calc(
+      100vh - 95px
+    ); /* To push to the selection container slightly below from the top */
+    background-color: #7cb5af;
+    left: 50%;
   }
 }

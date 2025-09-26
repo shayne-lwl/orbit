@@ -4,12 +4,15 @@
   justify-items: center;
   align-content: start;
   padding: 0 5%;
+  row-gap: 30px;
   margin-top: 95px;
+  height: 100%;
 }
 
 .mainSlogan,
 .secondarySlogan {
   font-family: "Alfa Slab One";
+  margin: 0;
 }
 
 .mainSlogan {
@@ -52,6 +55,7 @@
   text-decoration: none;
   color: var(--font-black);
   font-weight: 700;
+  margin-bottom: 20px;
   background-color: var(--yellow);
   border: 3px solid var(--font-black);
   padding: 5px 20px;
@@ -88,6 +92,7 @@
 @media screen and (min-width: 744px) {
   .container {
     row-gap: 50px;
+    padding-top: 50px;
   }
 
   #earthIcon {
@@ -99,6 +104,13 @@
   }
   .lastSlogan {
     font-size: 32px;
+  }
+
+  .joinButton {
+    font-size: 48px;
+    border-width: 5px;
+    padding: 5px 30px;
+    justify-self: center;
   }
 }
 
@@ -115,10 +127,26 @@
   .lastSlogan {
     font-size: 48px;
   }
+}
+
+@media (orientation: landscape) and (max-width: 932px) {
+  .container {
+    row-gap: 15px;
+    padding: 0;
+  }
+
+  .mainSlogan,
+  .secondarySlogan {
+    font-size: var(--fontsize-s);
+  }
+
+  #earthIcon {
+    width: 75px;
+  }
+  .lastSlogan {
+    font-size: var(--fontsize-s);
+  }
   .joinButton {
-    font-size: 48px;
-    border-width: 5px;
-    padding: 5px 30px;
-    justify-self: center;
+    font-size: var(--fontsize-s);
   }
 }
