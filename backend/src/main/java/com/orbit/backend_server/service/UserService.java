@@ -87,7 +87,7 @@ public class UserService {
     }
 
     // Email Verifcation Logic
-    public User verifyEmail(String email, String password, String verifcationCode) {
+    public User verifyEmail(String email, String verifcationCode) {
         User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
@@ -106,9 +106,6 @@ public class UserService {
         user.setIsEnabled(true);
         user.setVerificationCode(null);
         user.setVerificationCodeExpiry(null);
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(email, password)
-        );
         userRepository.save(user);
         return user;
     }

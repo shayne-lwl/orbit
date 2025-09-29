@@ -25,7 +25,13 @@
   line-height: 1;
 }
 
-.codeInput {
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.verificationCode {
   margin-top: 10px;
   font-size: var(--fontsize-m);
   text-align: center;
@@ -34,8 +40,16 @@
   transition: border ease-in-out 0.3s;
 }
 
-.codeInput:focus {
+.verificationCode:focus {
   border-color: var(--font-orange);
+}
+
+.errorMessage {
+  margin: 0;
+  margin-top: 10px;
+  line-height: 16px;
+  color: #bb2124;
+  font-size: var(--fontsize-s);
 }
 
 .resendInstruction {
@@ -63,6 +77,8 @@
 
 .verifyButton {
   font-size: var(--fontsize-m);
+  width: fit-content;
+  margin: auto;
   padding: 0 1.3em;
   border: 3px solid black;
   background-color: var(--yellow);
@@ -84,7 +100,12 @@
     font-size: var(--fontsize-m);
   }
 
-  .codeInput {
+  .verificationCode {
+    font-size: var(--fontsize-m);
+  }
+
+  .errorMessage {
+    margin-top: 20px;
     font-size: var(--fontsize-m);
   }
 
@@ -119,7 +140,7 @@
     font-size: var(--fontsize-l);
   }
 
-  .codeInput {
+  .verificationCode {
     font-size: var(--fontsize-l);
   }
   .resendInstruction {
@@ -141,7 +162,7 @@
 @media (orientation: landscape) and (max-width: 932px) {
   .container {
     margin-top: 95px;
-    height: calc(100vh - 95px);
+    height: calc(100vh);
     padding-bottom: 0px;
   }
   .emailIcon {
@@ -157,7 +178,12 @@
     font-size: var(--fontsize-s);
   }
 
-  .codeInput {
+  .verificationCode {
+    font-size: var(--fontsize-s);
+  }
+
+  .errorMessage {
+    margin-top: 10px;
     font-size: var(--fontsize-s);
   }
   .resendInstruction {

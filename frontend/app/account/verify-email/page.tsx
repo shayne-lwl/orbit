@@ -1,21 +1,28 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./EmailVerification.module.css";
 import Image from "next/image";
 import MailIcon from "@/public/mail.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-interface VerficationCodeInputType {
-  codeInput: string;
+interface FormInputType {
+  email: string;
+  verificationCode: string;
 }
 
 export default function EmailVerification() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
 
-  const { register, handleSubmit, setError } =
-    useForm<VerficationCodeInputType>();
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<FormInputType>();
 
   const [time, setTime] = useState(60000);
   const [resend, setResend] = useState(false);
@@ -71,6 +78,37 @@ export default function EmailVerification() {
     return Math.floor(time / 1000);
   };
 
+  const handleFormSubmission: SubmitHandler<FormInputType> = async (data) => {
+    Object.assign(data, { email: email }); // Include the email address in the data object we are going to send to the server
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/auth/register/verify-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const responseData = await response.json();
+      if (response.ok) {
+        localStorage.setItem("jwtToken", responseData.jwtToken);
+        localStorage.setItem("user", JSON.stringify(responseData.user));
+        router.push("/");
+      } else {
+        setError("root", {
+          type: "server",
+          message: responseData.error,
+        });
+      }
+    } catch (error) {
+      setError("root", {
+        type: "server",
+        message: "Please try again later ",
+      });
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Image
@@ -82,24 +120,41 @@ export default function EmailVerification() {
       <h2 className={styles.secondHeader}>
         Enter the 6 alphanumeric characters sent to {email}
       </h2>
-      <input
-        type="text"
-        className={styles.codeInput}
-        maxLength={6}
-        {...register("codeInput")}
-      />
-      <p className={styles.resendInstruction}>
-        Didn't receive the code?
-        <br />
-        {getFormattedTime() > 0 ? (
-          <span> Resend in {getFormattedTime()} seconds</span>
-        ) : (
-          <button className={styles.resendButton} onClick={handleResend}>
-            Resend
-          </button>
+      <form
+        action=""
+        className={styles.formContainer}
+        onSubmit={handleSubmit(handleFormSubmission)}
+      >
+        <input
+          type="text"
+          className={styles.verificationCode}
+          maxLength={6}
+          {...register("verificationCode", {
+            required: "Verification code is required",
+            minLength: {
+              value: 6,
+              message: "Verification code must be 6 characters long",
+            },
+          })}
+        />
+        {errors.verificationCode?.message && (
+          <p className={styles.errorMessage}>
+            {errors.verificationCode.message}
+          </p>
         )}
-      </p>
-      <button className={styles.verifyButton}>Verify</button>
+        <p className={styles.resendInstruction}>
+          Didn't receive the code?
+          <br />
+          {getFormattedTime() > 0 ? (
+            <span> Resend in {getFormattedTime()} seconds</span>
+          ) : (
+            <button className={styles.resendButton} onClick={handleResend}>
+              Resend
+            </button>
+          )}
+        </p>
+        <button className={styles.verifyButton}>Verify</button>
+      </form>
     </div>
   );
 }

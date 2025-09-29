@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.orbit.backend_server.service.JwtService;
 import com.orbit.backend_server.service.UserService;
+
 import com.orbit.backend_server.model.User;
 import com.orbit.backend_server.dto.EmailVerficiationDTO;
 import com.orbit.backend_server.dto.ResendCodeDTO;
@@ -37,9 +38,10 @@ public class UserController {
 
     @PostMapping("/register/verify-email")
     public ResponseEntity<Map<String, Object>> verifyEmail(@RequestBody EmailVerficiationDTO request) {
-       User registeredUser = userService.verifyEmail(request.getEmail(),request.getPassword(), request.getVerificationCode());
+       User registeredUser = userService.verifyEmail(request.getEmail(), request.getVerificationCode());
        String jwtToken = jwtService.generateToken(registeredUser);
-       return ResponseEntity.status(HttpStatus.OK).body(Map.of("Message", "Email verified successfully", "jwtToken", jwtToken, "user", registeredUser));
+
+       return ResponseEntity.status(HttpStatus.OK).body(Map.of("Message", "Email verified successfully","jwtToken", jwtToken, "user", registeredUser));
     }
 
     @PostMapping("/register/resend-verification-code") 
