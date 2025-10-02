@@ -6,6 +6,8 @@ import MailIcon from "@/public/mail.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
 
+import { checkAuthentication } from "@/app/hooks/AuthenticationProvider";
+
 interface FormInputType {
   email: string;
   verificationCode: string;
@@ -16,6 +18,8 @@ export default function EmailVerification() {
   const email = searchParams.get("email");
 
   const router = useRouter();
+
+  const { setUserData, setJwtToken } = checkAuthentication();
 
   const {
     register,
@@ -94,6 +98,8 @@ export default function EmailVerification() {
       if (response.ok) {
         localStorage.setItem("jwtToken", responseData.jwtToken);
         localStorage.setItem("user", JSON.stringify(responseData.user));
+        setUserData(responseData.user);
+        setJwtToken(responseData.jwtToken);
         router.push("/");
       } else {
         setError("root", {

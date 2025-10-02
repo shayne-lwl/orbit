@@ -3,16 +3,21 @@ import React, { useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
-
 import styles from "./NavigationBar.module.css";
 import MenuIcon from "../../../public/menu.png";
+import UserIcon from "@/public/user.svg";
+
 import { MobileMenu } from "./MobileMenu";
+
+import { checkAuthentication } from "@/app/hooks/AuthenticationProvider";
 
 const NavigationBar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const { userData, jwtToken } = checkAuthentication();
   return (
     <>
       <nav className={styles.navigationBarContainer}>
@@ -32,9 +37,17 @@ const NavigationBar = () => {
         <Link href="/" aria-label="orbitHomeLink">
           orbit
         </Link>
-        <Link href="/account" className={styles.getStartedBtn}>
-          Get Started
-        </Link>
+        {userData && jwtToken ? (
+          <Image
+            src={UserIcon}
+            alt="User Icon"
+            className={styles.userIcon}
+          ></Image>
+        ) : (
+          <Link href="/account" className={styles.getStartedBtn}>
+            Get Started
+          </Link>
+        )}
       </nav>
       <MobileMenu isMobileMenuOpen={isMobileMenuOpen} />
       <div

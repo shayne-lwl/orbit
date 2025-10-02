@@ -1,5 +1,5 @@
 .mobileMenuContainer {
-  width: 60%;
+  width: 50%;
   height: 100vh;
   background-color: whitesmoke;
   display: grid;
@@ -7,8 +7,8 @@
   align-items: end;
   position: fixed;
   top: 0;
-  left: -60%;
-  transition: ease-in-out 0.3s;
+  left: -50%;
+  transition: ease-in-out 0.5s;
   z-index: 100;
 }
 

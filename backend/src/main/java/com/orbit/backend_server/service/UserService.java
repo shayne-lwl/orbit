@@ -138,9 +138,6 @@ public class UserService {
             if(passwordEncoder.matches(request.getPassword(), user.getPassword())) { // Compare the stored password and request password
                 user.setLastSeen(LocalDateTime.now());
                 user.toggleOnlineStatus();
-                authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
-                );
                 return userRepository.save(user);
             }
 

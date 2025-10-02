@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import EarthIcon from "../public/earth-icon.png";
+
 export default function Home() {
   return (
     <main className={styles.container}>

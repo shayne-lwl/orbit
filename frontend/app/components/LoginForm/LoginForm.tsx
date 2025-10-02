@@ -2,6 +2,7 @@
 import styles from "./LoginForm.module.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Ref } from "react";
+import { useRouter } from "next/navigation";
 
 interface FormInput {
   email: string;
@@ -27,19 +28,31 @@ export default function LoginForm({
     reset, // To reset the input validation errors and input values when user clicks Register now
   } = useForm<FormInput>();
 
-  const loginUser = async (userData: FormInput): Promise<void> => {
-    const response = await fetch("http://localhost:8080/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
-    });
+  const router = useRouter();
 
-    const responseData = await response.json();
-    console.log(responseData);
-    if (!response.ok) {
+  const loginUser = async (userData: FormInput): Promise<void> => {
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        setError("root", {
+          type: "server",
+          message: responseData.error,
+        });
+      }
+
+      router.push("/");
+    } catch (error) {
+      console.log(error);
       setError("root", {
         type: "server",
-        message: responseData.error,
+        message: "Unexpected login error. Please try again later.",
       });
     }
   };

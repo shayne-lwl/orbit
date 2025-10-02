@@ -1,5 +1,6 @@
 import "./global.css";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
+import { AuthenticationProvider } from "./hooks/AuthenticationProvider";
 
 export default function RootLayout({
   children,
@@ -9,8 +10,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NavigationBar />
-        {children}
+        <AuthenticationProvider>
+          <NavigationBar />
+          {children}
+        </AuthenticationProvider>
       </body>
     </html>
   );

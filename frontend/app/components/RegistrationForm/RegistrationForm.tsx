@@ -2,7 +2,7 @@
 import styles from "./RegistrationForm.module.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useState, useContext } from "react";
+
 interface FormInput {
   username: string;
   email: string;
@@ -40,7 +40,6 @@ export default function RegistrationForm({
   } = useForm<FormInput>();
   const passwordValue = watch("password"); // This is variable is to check if its value matches with the passwordConfirmation input value.
 
-  const [userData, setUserData] = useState<User | null>(null);
   const router = useRouter();
 
   const registerUser = async (userData: FormInput): Promise<User | null> => {
@@ -61,8 +60,6 @@ export default function RegistrationForm({
         });
         return null;
       }
-
-      setUserData(responseData);
 
       return responseData;
     } catch (error) {

@@ -55,7 +55,8 @@
   padding-right: 30px;
 }
 
-.menuIcon {
+.menuIcon,
+.userIcon {
   width: 24px;
   height: auto;
 }
@@ -78,6 +79,11 @@
 .overlay.active {
   opacity: 1;
   pointer-events: auto;
+}
+
+.userIcon {
+  justify-self: end;
+  margin-right: 10px;
 }
 
 /* Tablet Screen (744px and up) */
@@ -121,5 +127,9 @@
 
   .navigationBarContainer > .desktop {
     gap: 100px;
+  }
+
+  .userIcon {
+    width: 44px;
   }
 }
